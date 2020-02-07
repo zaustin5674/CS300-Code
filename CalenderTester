@@ -1,0 +1,135 @@
+//////////////// FILE HEADER (INCLUDE IN EVERY FILE) //////////////////////////
+//
+// Title:   Calendar Printer, user specifies starting month/year and number of months
+// Files:   CalendarPrinter.java, CalendarTester.java
+// Course:  CS300, Spring, 2020
+//
+// Author:  Zach Austin
+// Email:   zaustin@wisc.edu
+// Lecturer's Name: Gary Dahl
+//
+//////////// PAIR PROGRAMMING (MAY SKIP WHEN WORKING INDIVIDUALLY) ////////////
+//
+// Partner Name:    N/A
+// Partner Email:   N/A
+// Partner Lecturer's Name: N/A
+// 
+// VERIFY THE FOLLOWING BY PLACING AN X NEXT TO EACH TRUE STATEMENT:
+//   ___ Write-up states that pair programming is allowed for this assignment.
+//   ___ We have both read and understood the course Pair Programming Policy.
+//   ___ We have registered our team prior to the team registration deadline.
+//
+///////////////////////// ALWAYS CREDIT OUTSIDE HELP //////////////////////////
+//
+// Students who get help from sources other than their partner and the course 
+// staff must fully acknowledge and credit those sources here.  If you did not
+// receive any help of any kind from outside sources, explicitly indicate NONE
+// next to each of the labels below.
+//
+// Persons:         (identify each person and describe their help in detail)
+// Online Sources:  (identify each URL and describe their assistance in detail)
+//
+///////////////////////////////////////////////////////////////////////////////
+
+
+public class CalendarTester {
+
+	public static void main(String[] args) {
+		System.out.println("fullCenturiesContainedTest(): " + testFullCenturiesContained());
+		System.out.println("yearOffsetWithinCenturyTest(): " + testYearOffsetWithinCentury());
+		System.out.println("isLeapYearTest(): " + testIsLeapYear());
+		System.out.println("numberOfDaysInMonthTest(): " + testNumberOfDaysInMonth());
+		System.out.println("calcFirstDayOfWeekInMonthTest(): " + testCalcFirstDayOfWeekInMonth());
+		System.out.println("dayOfWeekAfterTest(): " + testDayOfWeekAfter());
+		System.out.println("monthOfYearAfterTest(): " + testMonthOfYearAfter());
+		System.out.println("createNewMonthTest(): " + testCreateNewMonth());
+
+	}
+
+	public static boolean testFullCenturiesContained() {
+		if (CalendarPrinter.fullCenturiesContained(new Year(2)) != 0)
+			return false;
+		if (CalendarPrinter.fullCenturiesContained(new Year(2020)) != 20)
+			return false;
+		if (CalendarPrinter.fullCenturiesContained(new Year(44444)) != 444)
+			return false;
+		return true;
+	}
+
+	public static boolean testYearOffsetWithinCentury() {
+		if (CalendarPrinter.yearOffsetWithinCentury(new Year(2034)) != 34)
+			return false;
+		if (CalendarPrinter.yearOffsetWithinCentury(new Year(103856345)) != 45)
+			return false;
+		if (CalendarPrinter.yearOffsetWithinCentury(new Year(10)) != 10)
+			return false;
+		return true;
+	}
+
+	public static boolean testIsLeapYear() {
+		if (!CalendarPrinter.isLeapYear(new Year(2400)))
+			return false;
+		if (!CalendarPrinter.isLeapYear(new Year(400)))
+			return false;
+		if (CalendarPrinter.isLeapYear(new Year(567)))
+			return false;
+		return true;
+	}
+
+	public static boolean testNumberOfDaysInMonth() {
+		if (CalendarPrinter.numberOfDaysInMonth(new Month(MonthOfYear.February, new Year(2400))) != 29)
+			return false;
+		if (CalendarPrinter.numberOfDaysInMonth(new Month(MonthOfYear.May, new Year(1996))) != 31)
+			return false;
+		if (CalendarPrinter.numberOfDaysInMonth(new Month(MonthOfYear.June, new Year(1))) != 30)
+			return false;
+		return true;
+	}
+
+	public static boolean testCalcFirstDayOfWeekInMonth() {
+		if (CalendarPrinter
+				.calcFirstDayOfWeekInMonth(new Month(MonthOfYear.February, new Year(2020))) != DayOfWeek.Saturday)
+			return false;
+		if (CalendarPrinter
+				.calcFirstDayOfWeekInMonth(new Month(MonthOfYear.April, new Year(2020))) != DayOfWeek.Wednesday)
+			return false;
+		if (CalendarPrinter
+				.calcFirstDayOfWeekInMonth(new Month(MonthOfYear.November, new Year(2019))) != DayOfWeek.Friday)
+			return false;
+		return true;
+	}
+
+	public static boolean testDayOfWeekAfter() {
+		if (CalendarPrinter.dayOfWeekAfter(DayOfWeek.Friday) != DayOfWeek.Saturday)
+			return false;
+		if (CalendarPrinter.dayOfWeekAfter(DayOfWeek.Monday) != DayOfWeek.Tuesday)
+			return false;
+		if (CalendarPrinter.dayOfWeekAfter(DayOfWeek.Thursday) != DayOfWeek.Friday)
+			return false;
+		return true;
+	}
+
+	public static boolean testMonthOfYearAfter() {
+		if (CalendarPrinter.monthOfYearAfter(MonthOfYear.April) != MonthOfYear.May)
+			return false;
+		if (CalendarPrinter.monthOfYearAfter(MonthOfYear.July) != MonthOfYear.August)
+			return false;
+		if (CalendarPrinter.monthOfYearAfter(MonthOfYear.December) != MonthOfYear.January)
+			return false;
+		return true;
+	}
+
+	public static boolean testCreateNewMonth() {
+		if (CalendarPrinter.monthOfYearAfter(
+				CalendarPrinter.createNewMonth(MonthOfYear.April, new Year(1456)).getMonthOfYear()) != MonthOfYear.May)
+			return false;
+		if (CalendarPrinter.calcFirstDayOfWeekInMonth(
+				CalendarPrinter.createNewMonth(MonthOfYear.April, new Year(2019))) != DayOfWeek.Monday)
+			return false;
+		if (CalendarPrinter
+				.numberOfDaysInMonth(CalendarPrinter.createNewMonth(MonthOfYear.April, new Year(2021))) != 30)
+			return false;
+		return true;
+	}
+
+}
